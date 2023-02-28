@@ -1,10 +1,4 @@
-import http.server
-import socketserver
+from server import *
 
-port = 8080
-Handler = http.server.SimpleHTTPRequestHandler
-
-with socketserver.TCPServer(("", port), Handler) as httpd:
-    print("Сервер запущен!\nПорт: ", port)
-    print("http://localhost:8080/")
-    httpd.serve_forever()
+sess = Server_1('127.0.0.1', 8000)
+data = sess.go_server()
