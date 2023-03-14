@@ -1,11 +1,8 @@
 import socket
-from pesponse import *
+from Class_event import *
 
 
 class Server_1:
-
-    HDRS = 'HTTP/1.1 200 OK\r\nContent-Type: text/html; charseet=utf-8\r\n\r\n'
-    HDRS_404 = 'HTTP/1.1 404 OK\r\nContent-Type: text/html; charseet=utf-8\r\n\r\n'
 
     def __init__(self, ip_addr, host, conn=None, data=None):
         self.ip_addr = ip_addr
@@ -18,11 +15,14 @@ class Server_1:
             server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             server.bind((self.ip_addr, self.host_port))
             server.listen(4)
+            start_server = f'http://127.0.0.1:{self.host_port}/index.html'
+            print(f'Server started {start_server}')
             while True:
                 self.conn, addr = server.accept()
                 self.data = self.conn.recv(1024).decode('utf-8')
-                self.conn.send(load_html(self.data))
+                event = Event(self.data)
+                self.conn.send(event.schow_page())
+                event.save_users_db()
                 self.conn.shutdown(socket.SHUT_WR)
         except KeyboardInterrupt:
             server.close()
-        return self.data
