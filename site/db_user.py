@@ -1,4 +1,5 @@
 import pymysql
+import hashlib
 
 host = 'localhost'
 user = 'mark'

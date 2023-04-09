@@ -1,5 +1,4 @@
 from server import *
-from random import randint
 
 
 try:
